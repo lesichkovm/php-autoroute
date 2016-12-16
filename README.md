@@ -7,6 +7,9 @@ Just from the route (URI) it will find and execute the appropriate controller an
 
 ## Example routes
 
+Route: /admin/user-management/view-users
+Executes: Admin\UserManagementController@viewUsers
+
 Route: user/admin/test/home
 Executes: User\Admin\TestController@home
 
