@@ -24,6 +24,7 @@ function autoroute($route = '') {
     $path = explode('/', $route);
     $method = trim(str_replace('-', '_', array_pop($path)));
     $path = array_map(function($e) {
+        $e = trim(str_replace('-', '_', $e));
         return camelize($e, true);
     }, $path);
     $controller = trim(implode('\\', $path));
