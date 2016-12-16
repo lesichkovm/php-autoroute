@@ -1,8 +1,7 @@
 <?php
 /**
  * This function will recognize the Controller@Method action
- * to be executed depending on the URI used.
- 
+ * to be executed depending on the URI used. 
  * <code>
  * include('autoroute.php');
  * $route = isset($_REQUEST['route']) ? trim($_REQUEST['route']) : '';
@@ -24,7 +23,10 @@ function autoroute($route = '') {
 
     $path = explode('/', $route);
     $method = trim(str_replace('-', '_', array_pop($path)));
-    $controller = trim(implode('_', $path));
+    $path = array_map(function($e) {
+        return camelize($e, true);
+    }, $path);
+    $controller = trim(implode('\\', $path));
     if ($method == '') {
         $method = 'home';
     }
