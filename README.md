@@ -1,9 +1,12 @@
 # PHP-Autoroute
 
-This is a set-and-forget smart router script. 
+This is a set-and-forget smart router script.
 
 ## How it works?
 Just from the route (URI) it will find and execute the appropriate controller and method.
+
+## Requirements
+Your controllers must be either included (i.e. using require_once), or you must have an autoload function registered (recommended). See http://php.net/manual/en/language.oop5.autoload.php for how to register and autoload classes.
 
 ## Example routes
 
@@ -19,9 +22,19 @@ Executes: User\Admin\TestController@home
 $route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
 
 // 2. Autoroute
+autoroute($route);
+```
+
+# Example Usage with Exception
+```php
+// 1. Get the current route
+$route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
+
+// 2. Autoroute
 try {
     autoroute($route);
 } catch (\Eception $e) {
-    // Deal with exception
+    // Deal with exception (i.e. send yourself a mail)
 }
 ```
+
