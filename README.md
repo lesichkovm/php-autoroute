@@ -2,7 +2,7 @@
 
 The set-and-forget smart router script.
 
-## How it works?
+## How does it work?
 Just from the route (URI) it will find and execute the appropriate controller and method.
 
 ## Requirements
@@ -16,7 +16,8 @@ Executes: Admin\UserManagementController@viewUsers
 Route: user/admin/test/home
 Executes: User\Admin\TestController@home
 
-# Usage
+## Usage
+
 ```php
 // 1. Get the current route
 $route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
@@ -25,7 +26,8 @@ $route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
 autoroute($route);
 ```
 
-# Example Usage with Exception
+## Example Usage with Exception Catching
+
 ```php
 // 1. Get the current route
 $route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
