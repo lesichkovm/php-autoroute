@@ -1,6 +1,6 @@
 # PHP-Autoroute
 
-This is a set-and-forget smart router script.
+The set-and-forget smart router script.
 
 ## How it works?
 Just from the route (URI) it will find and execute the appropriate controller and method.
