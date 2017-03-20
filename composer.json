@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "type": "library",
     "keywords": ["route", "auto", "php", "lesichkov"],    
-    "homepage": "http://github.com/lesichkovm/php-auto-route",
+    "homepage": "http://github.com/lesichkovm/php-autoroute",
     "license": "commercial",
     "authors": [
         {
