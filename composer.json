@@ -1,0 +1,20 @@
+{
+    "name": "lesichkovm/php-auto-route",
+    "description": "Automatic route for PHP",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": ["route", "auto", "php", "lesichkov"],    
+    "homepage": "http://github.com/lesichkovm/php-auto-route",
+    "license": "commercial",
+    "authors": [
+        {
+            "name": "Milan Lesichkov",
+            "email": "lesichkovm@gmail.com",
+            "homepage": "http://lesichkov.co.uk",
+            "role": "Lead Developer"
+        }
+    ],
+    "autoload": {
+        "files": ["src/autoroute.php"]
+    }
+}
