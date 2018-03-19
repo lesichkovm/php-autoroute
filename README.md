@@ -2,6 +2,21 @@
 
 The set-and-forget smart router script.
 
+## Installation ##
+Add the following to your composer file:
+
+```json
+   "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/lesichkovm/php-autoroute.git"
+        }
+    ],
+    "require": {
+        "lesichkovm/php-autoroute": "dev-master"
+    },
+```
+
 ## How does it work?
 Just from the route (URI) it will find and execute the appropriate controller and method. Pass the current route and autoroute will call the associated controller and method.
 
