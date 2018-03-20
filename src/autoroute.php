@@ -13,6 +13,10 @@
 function autoroute($route = '', $options = []) {
 
     function camelize($string, $first_char_caps = false) {
+        $string = trim($string);
+        if ($string == ""){
+            return "";
+        }
         if ($first_char_caps == true) {
             $string[0] = strtoupper($string[0]);
         }
