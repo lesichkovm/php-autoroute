@@ -53,6 +53,14 @@ Executes: User\Admin\TestController@getHome
 
 ## How to use
 
+### Simple One Line Example ###
+
+```php
+autoroute($_SERVER['REQUEST_URI']);
+```
+
+### Advanced Options with Exception Catching ###
+
 ```php
 // 1. Get the current route
 $route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
