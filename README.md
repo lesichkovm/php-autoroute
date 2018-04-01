@@ -1,6 +1,6 @@
-# PHP-Autoroute
+# PHP Autoroute
 
-The set-and-forget smart router script.
+The "set-and-forget" smart router script.
 
 ## Installation ##
 
