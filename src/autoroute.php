@@ -1,11 +1,9 @@
 <?php
-
 /**
- * This function will recognize the action to be executed by PHP
- * depending on the URI used. It will return an array with two entries
- * controller and method.
+ * This function will automatically convert a specified route to
+ * a controller and method, and will execute these.
  * <code>
- * list(controller,method) = autoroute(route);
+ * autoroute(route);
  * </code>
  * @param string $route
  * @return array
