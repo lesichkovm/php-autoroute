@@ -5,7 +5,7 @@
     "type": "library",
     "keywords": ["route", "auto", "php", "lesichkov"],    
     "homepage": "http://github.com/lesichkovm/php-autoroute",
-    "license": "commercial",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Milan Lesichkov",
