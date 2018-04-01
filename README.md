@@ -4,7 +4,7 @@ The set-and-forget smart router script.
 
 ## Installation ##
 
-### A. Use composer (preferred)###
+### A. Use composer (preferred) ###
 
 ### B. Manually via composer ###
 
@@ -65,10 +65,10 @@ try {
         'default_namespace' => 'App\\Controllers',
         'use_request_method' => true,
     ]);
-} catch (ReflectionException $e) {
+} catch (ReflectionException $re) {
     // Page not found
-    die('Not found:' . $e->controller . '@' . $e->method);
-} catch (Exception) {
+    die('Not found:' . $re->controller . '@' . $re->method);
+} catch (Exception $e) {
     // Other non routing related exception
     // Deal with exception (i.e. send yourself a mail)
     die('Exception occurred');
