@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This function will automatically convert a specified route to
- * a controller and method, and will execute these.
- * if no controller method is found an exception will be thrown
+ * This function will recognize the action to be executed by PHP
+ * depending on the URI used. It will return an array with two entries
+ * controller and method.
  * <code>
- * autoroute(route);
+ * list(controller,method) = autoroute(route);
  * </code>
  * @param string $route
- * @return array $options
+ * @return array
  */
 function autoroute($route = '', $options = []) {
 
@@ -37,7 +37,7 @@ function autoroute($route = '', $options = []) {
 
     function listControllerMethod($route, $defaultNamespace, $defaultController, $defaultMethod, $useRequestMethod) {
         $requestMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
-        $path = explode('/', $route);
+        $path = explode('/', trim($route, '/'));
         $method = unslug(array_pop($path));
         $controller = trim(implode('\\', unslug($path)));
 
