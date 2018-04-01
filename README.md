@@ -3,6 +3,11 @@
 The set-and-forget smart router script.
 
 ## Installation ##
+
+### A. Use composer (preferred)###
+
+### B. Manually via composer ###
+
 Add the following to your composer file:
 
 ```json
@@ -28,30 +33,25 @@ See http://php.net/manual/en/language.oop5.autoload.php for how to register and 
 ## Example routes
 
 Route: /admin/user-management/view-users
+
 Executes: Admin\UserManagementController@viewUsers
 
 Route: user/admin/test/home
+
 Executes: User\Admin\TestController@home
 
 ## Example routes using request method
 
 Route: /admin/user-management/view-users
+
 Executes: Admin\UserManagementController@getViewUsers
 
+
 Route: user/admin/test/home
+
 Executes: User\Admin\TestController@getHome
 
-## Usage
-
-```php
-// 1. Get the current route
-$route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
-
-// 2. Autoroute
-autoroute($route,['use_request_method' => true]);
-```
-
-## Example Usage with Exception Catching
+## How to use
 
 ```php
 // 1. Get the current route
@@ -59,9 +59,19 @@ $route = isset($_REQUEST['route']) ? $_REQUEST['route'] : '';
 
 // 2. Autoroute
 try {
-    autoroute($route);
-} catch (\Eception $e) {
+    autoroute($route, [
+        'default_method' => 'index',
+        'default_controller' => 'Guest',
+        'default_namespace' => 'App\\Controllers',
+        'use_request_method' => true,
+    ]);
+} catch (ReflectionException $e) {
+    // Page not found
+    die('Not found:' . $e->controller . '@' . $e->method);
+} catch (Exception) {
+    // Other non routing related exception
     // Deal with exception (i.e. send yourself a mail)
+    die('Exception occurred');
 }
 ```
 
