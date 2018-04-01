@@ -1,6 +1,6 @@
 {
     "name": "lesichkovm/php-autoroute",
-    "description": "Automatically maps route to controller and method",
+    "description": "Automatically maps a provided route to a controller and method",
     "type": "library",
     "keywords": ["route", "auto", "php", "lesichkov"],    
     "homepage": "http://github.com/lesichkovm/php-autoroute",
