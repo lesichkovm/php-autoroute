@@ -1,76 +1,85 @@
 <?php
 
 /**
- * This function will recognize the action to be executed by PHP
- * depending on the URI used. It will return an array with two entries
- * controller and method.
+ * This function will automatically convert a specified route to
+ * a controller and method, and will execute these.
+ * if no controller method is found an exception will be thrown
  * <code>
- * list(controller,method) = autoroute(route);
+ * autoroute(route);
  * </code>
  * @param string $route
- * @return array
+ * @return array $options
  */
 function autoroute($route = '', $options = []) {
 
-    function camelize($string, $first_char_caps = false) {
-        $string = trim($string);
-        if ($string == ""){
+    function camelize($string, $firstCharCaps = false) {
+        $stringTrimmed = trim($string);
+        if ($stringTrimmed == "") {
             return "";
         }
-        if ($first_char_caps == true) {
-            $string[0] = strtoupper($string[0]);
-        }
-        $func = create_function('$c', 'return strtoupper($c[1]);');
-        return preg_replace_callback('/_([a-z])/', $func, $string);
+        $words = explode('_', $stringTrimmed);
+        $wordsCamelized = array_map('ucfirst', $words);
+        $stringCamelized = implode('', $wordsCamelized);
+        $final = $firstCharCaps ? $stringCamelized : lcfirst($stringCamelized);
+        //echo $final;
+        return $final;
     }
 
-    function listControllerMethod($route, $useRequestMethod) {
-        $requestMethod = $_SERVER['REQUEST_METHOD'];
+    function unslug($slug) {
+        if (is_array($slug)) {
+            return array_map(function($e) {
+                $e = unslug($e);
+                return camelize($e, true);
+            }, $slug);
+        }
+        return trim(str_replace('-', '_', $slug));
+    }
+
+    function listControllerMethod($route, $defaultNamespace, $defaultController, $defaultMethod, $useRequestMethod) {
+        $requestMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
         $path = explode('/', $route);
-        $method = trim(str_replace('-', '_', array_pop($path)));
-        $path = array_map(function($e) {
-            $e = trim(str_replace('-', '_', $e));
-            return camelize($e, true);
-        }, $path);
-        $controller = trim(implode('\\', $path));
+        $method = unslug(array_pop($path));
+        $controller = trim(implode('\\', unslug($path)));
 
         if ($method == '') {
-            $method = 'home';
-        }
-        if ($controller == '') {
-            $controller = 'Guest';
+            $method = $defaultMethod;
         }
 
-        $controllerCamelized = camelize($controller, true) . 'Controller';
+        if ($controller == '') {
+            $controller = $defaultController;
+        }
+
+        $namespace = $defaultNamespace == "" ? '' : $defaultNamespace . '\\';
+
+        $controllerCamelized = camelize($namespace . $controller, true) . 'Controller';
 
         if ($useRequestMethod == 'yes') {
             $methodCamelized = camelize(strtolower($requestMethod) . '_' . $method);
             if (method_exists($controllerCamelized, $methodCamelized)) {
                 return [$controllerCamelized, $methodCamelized];
             }
-            $methodCamelizedAny = camelize('any_' . $method);
-            return [$controllerCamelized, $methodCamelizedAny];
+            return [$controllerCamelized, camelize('any_' . $method)];
         }
 
-        $methodCamelized = camelize($method);
-        return [$controllerCamelized, $methodCamelized];
+        return [$controllerCamelized, camelize($method)];
     }
 
-    $useRequestMethod = isset($options['use_request_method']) ? $options['use_request_method'] : false;
-    list($controller, $method) = listControllerMethod($route, $useRequestMethod);
+    $defaultNamespace = $options['default_namespace'] ?? '';
+    $defaultController = $options['default_controller'] ?? 'Guest';
+    $defaultMethod = $options['default_method'] ?? 'index';
+    $useRequestMethod = $options['use_request_method'] ?? false;
+    list($controller, $method) = listControllerMethod($route, $defaultNamespace, $defaultController, $defaultMethod, $useRequestMethod);
 
 
     try {
-        $reflectionClass = new ReflectionClass($controller);
-
         $reflectionMethod = new ReflectionMethod($controller, $method);
         if ($reflectionMethod->isPublic() == true) {
             die($reflectionMethod->invokeArgs(new $controller, []));
         }
         die('No public access allowed');
-    } catch (Exception $e) {
-        //die('Not found:' . $controllerCamelized . '@' . $methodCamelized);
-        die($e);
+    } catch (ReflectionException $e) {
+        $e->controller = $controller;
+        $e->method = $method;
+        throw $e;
     }
-    //return [$controllerCamelized, $methodCamelized];
 }
