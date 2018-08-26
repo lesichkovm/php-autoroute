@@ -60,7 +60,7 @@ Executes: User\Admin\TestController@getHome
 ### Simple One Line Example ###
 
 ```php
-autoroute($_SERVER['REQUEST_URI']);
+autoroute(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 ```
 
 ### Advanced Options with Exception Catching ###
