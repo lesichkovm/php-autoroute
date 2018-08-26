@@ -6,6 +6,10 @@ The "set-and-forget" smart router script.
 
 ### A. Use composer (preferred) ###
 
+```bash
+composer require lesichkovm/php-autoroute
+```
+
 ### B. Manually via composer ###
 
 Add the following to your composer file:
